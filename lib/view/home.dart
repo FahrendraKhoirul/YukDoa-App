@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yukdoa/const.dart';
 import 'package:yukdoa/data/data.dart';
 import 'package:yukdoa/view/customdrawer.dart';
@@ -12,7 +13,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
   GlobalKey <ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late SharedPreferences pref;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      pref = sp;
+      translateToggle = pref.getBool("translate")?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

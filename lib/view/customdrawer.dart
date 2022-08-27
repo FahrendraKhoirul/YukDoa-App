@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yukdoa/const.dart';
 import 'package:yukdoa/view/profile.dart';
 
@@ -9,6 +10,15 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+
+
+  void saveData() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool("translate", translateToggle);
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +52,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   child: Column(
                       children: [
                         SwitchListTile(
-
                           activeColor: customYellow,
                           onChanged: (bool value){
                             setState(() {
-                              translateToggle = value;
+                             translateToggle = value;
+                              saveData();
                             });
                           },
                           secondary: Icon(Icons.translate, color: Colors.white,),
